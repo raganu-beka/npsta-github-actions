@@ -22,7 +22,7 @@ runs:
     - name: Stop existing service
       shell: powershell
       working-directory: python-greetings
-      run: pm2 delete greetings-app-${{ inputs.env_name }} & set "errorlevel=0"
+      run: pm2 delete greetings-app-${{ inputs.env_name }} || $true
 
     - name: Start new service
       shell: powershell
