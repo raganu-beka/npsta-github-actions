@@ -1,0 +1,27 @@
+name: "Run Tests"
+description: "Runs tests"
+inputs:
+  env_name:
+    description: "Environment (dev, staging, preprod, prod)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Clone test repository
+      uses: actions/checkout@v4
+      with:
+        repository: "mtararujs/course-js-api-framework"
+        path: "course-js-api-framework"
+
+    - name: Install test dependencies
+      shell: cmd
+      working-directory: course-js-api-framework
+      run: npm install
+
+    - name: Run tests
+      shell: cmd
+      working-directory: course-js-api-framework
+      run: npm run greetings greetings_${{ inputs.env_name }}
