@@ -17,11 +17,11 @@ runs:
         path: "course-js-api-framework"
 
     - name: Install test dependencies
-      shell: cmd
+      shell: powershell
       working-directory: course-js-api-framework
       run: npm install
 
     - name: Run tests
-      shell: cmd
+      shell: powershell
       working-directory: course-js-api-framework
       run: npm run greetings greetings_${{ inputs.env_name }}
