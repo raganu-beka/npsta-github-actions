@@ -22,7 +22,7 @@ jobs:
         path: "python-greetings"
 
     - name: Install dependencies
-      shell: ps
+      shell: powershell
       working-directory: python-greetings
       run: pip install -r requirements.txt
 
