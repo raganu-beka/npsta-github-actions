@@ -1,0 +1,30 @@
+name: "Deploy"
+description: "Deploys"
+inputs:
+  env_name:
+    description: "Environment (dev, staging, preprod, prod)"
+    required: true
+  port:
+    description: "Port"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Clone python-greetings repository
+      uses: actions/checkout@v4
+      with:
+        repository: "mtararujs/python-greetings"
+        path: "python-greetings"
+
+    - name: Stop existing service
+      shell: cmd
+      working-directory: python-greetings
+      run: pm2 delete greetings-app-${{ inputs.env_name }} & set "errorlevel=0"
+
+    - name: Start new service
+      shell: cmd
+      working-directory: python-greetings
+      run: pm2 start app.py --name greetings-app-${{ inputs.env_name }} -- --port ${{ inputs.port }}
